@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Lotto <https://github.com/devLotto>
+ * Copyright (c) 2020, Zach <https://github.com/zacharydwaller>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,23 +22,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.screenshot.imgur;
+package net.runelite.client.plugins.menuentryswapper;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Base64;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.MenuAction;
 
-@Data
-public class ImageUploadRequest
+@Getter
+@RequiredArgsConstructor
+public enum ShiftWithdrawMode
 {
-	private final String image;
-	private final String type;
+	WITHDRAW_1("Withdraw-1", MenuAction.CC_OP, 2),
+	WITHDRAW_5("Withdraw-5", MenuAction.CC_OP, 3),
+	WITHDRAW_10("Withdraw-10", MenuAction.CC_OP, 4),
+	WITHDRAW_X("Withdraw-X", MenuAction.CC_OP, 5),
+	WITHDRAW_ALL("Withdraw-All", MenuAction.CC_OP_LOW_PRIORITY, 7),
+	WITHDRAW_ALL_BUT_1("Withdraw-All-But-1", MenuAction.CC_OP_LOW_PRIORITY, 8),
+	OFF("Off", MenuAction.UNKNOWN, 0);
 
-	public ImageUploadRequest(File imageFile) throws IOException
+	private final String name;
+	private final MenuAction menuAction;
+	private final int identifier;
+
+	@Override
+	public String toString()
 	{
-		this.image = Base64.getEncoder().encodeToString(Files.readAllBytes(imageFile.toPath()));
-		this.type = "base64";
+		return name;
 	}
 }

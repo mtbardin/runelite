@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2018, terminatusx <jbfleischman@gmail.com>
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
+ * Copyright (c) 2020, Zach <https://github.com/zacharydwaller>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,53 +22,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.client.plugins.wintertodt;
+package net.runelite.client.plugins.menuentryswapper;
 
-import java.awt.Color;
-import net.runelite.client.config.Config;
-import net.runelite.client.config.ConfigGroup;
-import net.runelite.client.config.ConfigItem;
-import net.runelite.client.config.Range;
-import net.runelite.client.config.Units;
-import net.runelite.client.plugins.wintertodt.config.WintertodtNotifyMode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.MenuAction;
 
-@ConfigGroup("wintertodt")
-public interface WintertodtConfig extends Config
+@Getter
+@RequiredArgsConstructor
+public enum ShiftDepositMode
 {
-	@ConfigItem(
-		position = 1,
-		keyName = "notifyCondition",
-		name = "Notify When",
-		description = "Configures when to send notifications"
-	)
-	default WintertodtNotifyMode notifyCondition()
-	{
-		return WintertodtNotifyMode.ONLY_WHEN_INTERRUPTED;
-	}
+	DEPOSIT_1("Deposit-1", MenuAction.CC_OP, 3),
+	DEPOSIT_5("Deposit-5", MenuAction.CC_OP, 4),
+	DEPOSIT_10("Deposit-10", MenuAction.CC_OP, 5),
+	DEPOSIT_X("Deposit-X", MenuAction.CC_OP_LOW_PRIORITY, 6),
+	DEPOSIT_ALL("Deposit-All", MenuAction.CC_OP_LOW_PRIORITY, 8),
+	EXTRA_OP("Eat/Wield/Etc.", MenuAction.CC_OP_LOW_PRIORITY, 9),
+	OFF("Off", MenuAction.UNKNOWN, 0);
 
-	@ConfigItem(
-		position = 2,
-		keyName = "damageNotificationColor",
-		name = "Damage Notification Color",
-		description = "Color of damage notification text in chat"
-	)
-	default Color damageNotificationColor()
-	{
-		return Color.CYAN;
-	}
+	private final String name;
+	private final MenuAction menuAction;
+	private final int identifier;
 
-	@ConfigItem(
-		position = 3,
-		keyName = "roundNotification",
-		name = "Wintertodt round notification",
-		description = "Notifies you before the round starts (in seconds)"
-	)
-	@Range(
-		max = 60
-	)
-	@Units(Units.SECONDS)
-	default int roundNotification()
+	@Override
+	public String toString()
 	{
-		return 5;
+		return name;
 	}
 }
