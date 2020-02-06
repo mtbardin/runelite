@@ -75,6 +75,10 @@ public class InfoPanel extends PluginPanel
 	private JPanel syncPanel;
 	private JPanel actionsContainer;
 
+	/* my code */
+	private JPanel groupContainer;
+	/* end my code */
+
 	@Inject
 	@Nullable
 	private Client client;
@@ -160,6 +164,12 @@ public class InfoPanel extends PluginPanel
 		actionsContainer.setBorder(new EmptyBorder(10, 0, 0, 0));
 		actionsContainer.setLayout(new GridLayout(0, 1, 0, 10));
 
+		/* my code */
+		groupContainer = new JPanel();
+		groupContainer.setBorder(new EmptyBorder(10, 0, 0, 0));
+		groupContainer.setLayout(new GridLayout(0, 1, 0, 10));
+		/* end my code */
+
 		syncPanel = buildLinkPanel(IMPORT_ICON, "Import local settings", "to remote RuneLite account", () ->
 		{
 			final int result = JOptionPane.showOptionDialog(syncPanel,
@@ -178,8 +188,17 @@ public class InfoPanel extends PluginPanel
 		actionsContainer.add(buildLinkPanel(PATREON_ICON, "Become a patron to", "help support RuneLite", RuneLiteProperties.getPatreonLink()));
 		actionsContainer.add(buildLinkPanel(WIKI_ICON, "Information about", "RuneLite and plugins", RuneLiteProperties.getWikiLink()));
 
+		/* my code */
+		groupContainer.add(buildGroupPanel("CSE 2410 Group Info:",
+				"Michael Bardin","Suryateja Addagarla","Robert Rumsey","Azim Shafi"));
+		/* end my code */
+
 		add(versionPanel, BorderLayout.NORTH);
 		add(actionsContainer, BorderLayout.CENTER);
+
+		/* my code */
+		add(groupContainer, BorderLayout.SOUTH);
+		/* end my code */
 
 		updateLoggedIn();
 		eventBus.register(this);
@@ -265,6 +284,56 @@ public class InfoPanel extends PluginPanel
 		container.add(arrowLabel, BorderLayout.EAST);
 
 		return container;
+	}
+
+	/**
+	 * my code
+	 * Builds a "splash" panel with our group's info
+	 */
+	private static JPanel buildGroupPanel(String topText, String nameOne, String nameTwo, String nameThree, String nameFour)
+	{
+		JPanel newContainer = new JPanel();
+		newContainer.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+		newContainer.setLayout(new BorderLayout());
+		newContainer.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+		final Color hoverColor = ColorScheme.DARKER_GRAY_HOVER_COLOR;
+		final Color pressedColor = ColorScheme.DARKER_GRAY_COLOR.brighter();
+
+		JPanel groupContainer = new JPanel();
+		groupContainer.setBackground(ColorScheme.DARKER_GRAY_COLOR);
+		groupContainer.setLayout(new GridLayout(5, 1));
+		groupContainer.setBorder(new EmptyBorder(5, 10, 5, 10));
+
+		JLabel topLine = new JLabel(topText);
+		topLine.setForeground(Color.WHITE);
+		topLine.setFont(FontManager.getRunescapeSmallFont());
+
+		JLabel secondLine = new JLabel(nameOne);
+		secondLine.setForeground(Color.WHITE);
+		secondLine.setFont(FontManager.getRunescapeSmallFont());
+
+		JLabel thirdLine = new JLabel(nameTwo);
+		thirdLine.setForeground(Color.WHITE);
+		thirdLine.setFont(FontManager.getRunescapeSmallFont());
+
+		JLabel fourthLine = new JLabel(nameThree);
+		fourthLine.setForeground(Color.WHITE);
+		fourthLine.setFont(FontManager.getRunescapeSmallFont());
+
+		JLabel bottomLine = new JLabel(nameFour);
+		bottomLine.setForeground(Color.WHITE);
+		bottomLine.setFont(FontManager.getRunescapeSmallFont());
+
+		groupContainer.add(topLine);
+		groupContainer.add(secondLine);
+		groupContainer.add(thirdLine);
+		groupContainer.add(fourthLine);
+		groupContainer.add(bottomLine);
+
+		newContainer.add(groupContainer, BorderLayout.CENTER);
+
+		return newContainer;
 	}
 
 	private void updateLoggedIn()
