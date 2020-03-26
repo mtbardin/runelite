@@ -138,8 +138,8 @@ class OpponentInfoOverlay extends Overlay
 		panelComponent.getChildren().clear();
 
 		// Opponent name
-		int textWidth = Math.max(ComponentConstants.STANDARD_WIDTH, fontMetrics.stringWidth(opponentName));
-		panelComponent.setPreferredSize(new Dimension(textWidth, 0));
+		int panelWidth = Math.max(ComponentConstants.STANDARD_WIDTH, fontMetrics.stringWidth(opponentName) + ComponentConstants.STANDARD_BORDER + ComponentConstants.STANDARD_BORDER);
+		panelComponent.setPreferredSize(new Dimension(panelWidth, 0));
 		panelComponent.getChildren().add(TitleComponent.builder()
 			.text(opponentName)
 			.build());
